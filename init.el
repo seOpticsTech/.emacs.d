@@ -171,15 +171,16 @@
           (unless found
             (tab-bar-new-tab))
           (switch-to-buffer filebuf)
-          (require 'neotree)
-          (neotree-show)
+          (when (fboundp 'neo-global--window-exists-p)
+            (unless (neo-global--window-exists-p)
+              (neotree-show)))
           (let ((gdb-buf (my/neotree--gdb-cli-buffer)))
             (when gdb-buf
               (let ((filewin (get-buffer-window filebuf t)))
                 (when filewin
                   (select-window filewin)))
               (let ((bottom-win (or (window-in-direction 'below (selected-window))
-                                    (split-window (selected-window) -13 'below))))
+                                    (split-window (selected-window) -15 'below))))
                 (when bottom-win
                   (set-window-buffer bottom-win gdb-buf)))))
           (let ((filewin (get-buffer-window filebuf t)))
@@ -193,14 +194,10 @@
   (let* ((buf (current-buffer))
          (name (buffer-name buf))
          (file (buffer-file-name buf))
-         (tab (tab-bar--current-tab))
-         (last-file (alist-get 'my-last-file tab))
          (tab-name (cond
                     ((string-match-p "\\*gdb\\*" name) "*gdb*")
                     (file (file-name-nondirectory file))
-                    (t last-file))))
-    (when (and file (not (eq major-mode 'neotree-mode)))
-      (setf (alist-get 'my-last-file (tab-bar--current-tab)) tab-name))
+                    (t nil))))
     (when (and tab-name
                (not (eq major-mode 'neotree-mode))
                (not (string= tab-name (alist-get 'name (tab-bar--current-tab)))))
