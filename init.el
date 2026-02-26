@@ -56,7 +56,7 @@
 
 ;; Ace Jump
 (use-package ace-jump-mode
-  :bind ("C-c j" . ace-jump-mode))
+  :bind ("C-c j" . ace-jump-char-mode))
 
 ;; LSP for C/C++ (clangd)
 (use-package lsp-mode
@@ -220,6 +220,10 @@
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
+
+;; Line numbers in text and code buffers
+(add-hook 'text-mode-hook #'display-line-numbers-mode)
+(add-hook 'prog-mode-hook #'display-line-numbers-mode)
 
 (provide 'init)
 ;;; init.el ends here
