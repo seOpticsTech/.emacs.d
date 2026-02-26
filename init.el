@@ -106,6 +106,13 @@
   :config
   (save-place-mode 1))
 
+;; Auto-reload files changed on disk
+(use-package autorevert
+  :ensure nil
+  :config
+  (setq auto-revert-verbose nil)
+  (global-auto-revert-mode 1))
+
 ;; Command: open GDB + Neotree tabs for a path
 (require 'cl-lib)
 (defun my/open-gdb-and-neotree-tabs (path)
