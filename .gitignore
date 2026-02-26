@@ -1,0 +1,18 @@
+eln-cache/
+elpa/
+auto-save-list/
+eshell/
+recentf
+history
+bookmarks
+tramp
+transient/
+*.elc
+ 
+.cache/
+.lsp-session-v1
+*~
+\#*\#
+.\#*
+places
+places-save
